@@ -14,8 +14,8 @@ public class Flat {
     private House house; //Поле не может быть null
 
     public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony) {
-        this.id = 10115 * 100000 + count; //почтовый Индекс Берлина + счётсчик
-        count++;
+        this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
+        Flat.count++;
 
         this.name = name;
         this.area = area;
