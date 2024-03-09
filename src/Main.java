@@ -22,9 +22,19 @@ public class Main {
 
         do {
             manager.getIntro();
-
+            String[] lineInParts = null;
+            String argIn = null;
             String lineIn = scanner.nextLine();
             // history
+
+            if (lineIn.contains(" ")) {
+                 lineInParts = lineIn.split(" ");
+            }
+
+            if (lineInParts != null && lineInParts.length == 2) {
+                lineIn = lineInParts[0];
+                argIn = lineInParts[1];
+            }
 
             switch (lineIn) {
                 case "exit":
@@ -49,11 +59,11 @@ public class Main {
                     break;
 
                 case "update_by_id":
-                    manager.update_by_id();
+                    manager.update_by_id(argIn);
                     break;
 
                 case "remove_by_id":
-                    manager.remove_by_id();
+                    manager.remove_by_id(argIn);
                     break;
 
                 case "clear":
