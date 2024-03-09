@@ -36,7 +36,7 @@ public class Manager {
         System.out.println("Здесь будет выданна помощь!");
     }
 
-    public void getInfo() {
+    public void getInfo() { //startInfoCommand
         //Romam
         System.out.println("Здесь будет выданна Информация о коллекции!");
     }
@@ -46,16 +46,16 @@ public class Manager {
     }
 
 
-    public void add() {
+    public void add() { // startAddCommand
         //Sergej
         System.out.println("добавить новый элемент в коллекцию!");
     }
 
-    public void update_by_id() {
+    public void update_by_id(String id) {
         System.out.println("обновить значение элемента коллекции, по id ");
     }
 
-    public void remove_by_id() {
+    public void remove_by_id(String id) {
         System.out.println("удалить элемент из коллекции по его id! ");
     }
 
