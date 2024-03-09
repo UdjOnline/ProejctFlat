@@ -32,10 +32,12 @@ public class Manager {
     }
 
     public void getHelp() {
+        // Roman
         System.out.println("Здесь будет выданна помощь!");
     }
 
     public void getInfo() {
+        //Romam
         System.out.println("Здесь будет выданна Информация о коллекции!");
     }
 
@@ -45,6 +47,7 @@ public class Manager {
 
 
     public void add() {
+        //Sergej
         System.out.println("добавить новый элемент в коллекцию!");
     }
 

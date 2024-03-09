@@ -11,6 +11,7 @@ public class Main {
         //ввести массив квартир:
         //перевести массив в LinkedList через for цикл.
         //List<Flat> flats = new LinkedList<>();
+//Евгений
 
         System.out.println("добро пожаловать в Манэджер квартир");
 
@@ -23,6 +24,7 @@ public class Main {
             manager.getIntro();
 
             String lineIn = scanner.nextLine();
+            // history
 
             switch (lineIn) {
                 case "exit":
