@@ -53,6 +53,7 @@ public class Manager {
     }
 
     public void getshow() {
+        //Sergej
         System.out.println("Здесь будет выданны все элементы коллекции!");
     }
 
