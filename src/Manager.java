@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 public class Manager {
 
@@ -33,12 +35,26 @@ public class Manager {
 
     public void getHelp() {
         // Roman
-        System.out.println("Здесь будет выданна помощь!");
+        System.out.println("Список доступных команд...");
+        System.out.println("help: список доступных команд");
+        System.out.println("show: показать все квартиры в списке");
+        System.out.println("add: добавить новую квартиру в список");
+        System.out.println("update_by_id {id}: обновить данные квартиры с указанным id");
+        System.out.println("remove_by_id {id}: удалить квартиру с данным id");
+        System.out.println("clear: очистить список квартир (используйте осторожно)");
+        System.out.println("exit: завершить программу без сохранения в файл");
+        System.out.println("remove_head : вывести первую квартиру списка и удалить её");
+        System.out.println("history : вывести последние 15 команд");
+        System.out.println("filter_less_than_balcony {balcony}: filter_less_than_balcony {balcony} : вывести квартиры, значение поля balcony которых меньше заданного");
+        System.out.println("print_ascending: вывести спискоре в порядке возрастания");
+
     }
 
-    public void getInfo() { //startInfoCommand
-        //Romam
-        System.out.println("Здесь будет выданна Информация о коллекции!");
+    public void getInfo(List<Flat> flatList) { //startInfoCommand
+        //Roman
+        System.out.println("Здесь будет выдана Информация о коллекции!");
+        System.out.println(flatList);
+
     }
 
     public void getshow() {

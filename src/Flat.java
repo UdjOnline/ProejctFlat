@@ -95,4 +95,17 @@ public class Flat {
 //        this.house = house;
 //    }
 //
+
+    @Override
+    public String toString() {
+        return "Квартира {" +
+                "id-Номер: " + id +
+                ", название: " + name + '\'' +
+                ", район: " + area +
+                ", число комнат: " + numberOfRooms +
+                ", наличие балкона: " + balcony +
+                ", мебель: " + furnish +
+                ", дом: " + house +
+                '}';
+    }
 }

@@ -10,7 +10,7 @@ public class Main {
 
         //ввести массив квартир:
         //перевести массив в LinkedList через for цикл.
-        //List<Flat> flats = new LinkedList<>();
+        List<Flat> flats = new LinkedList<>();
 //Евгений
 
         System.out.println("добро пожаловать в Манэджер квартир");
@@ -47,7 +47,7 @@ public class Main {
                     break;
 
                 case "info":
-                    manager.getInfo();
+                    manager.getInfo(flats);
                     break;
 
                 case "show":
