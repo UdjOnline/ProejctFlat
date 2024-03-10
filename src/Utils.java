@@ -43,4 +43,5 @@ public class Utils {
             return false; // если попали в catch, то возращаем false
         }
     }
+    // используются для проверки в строке
 }

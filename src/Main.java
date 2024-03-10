@@ -48,7 +48,7 @@ public class Main {
         name = manager.scanner.nextLine(); // считываем введенное пользователем значение имени
 
         System.out.print(name + ", " + "для Вас доступны следующие команды: \n"); // выводим это сообщение пользователю
-        manager.getHelp();
+        manager.getHelp(); // сразу выдаётся информация о объектах
 
         boolean loopIsTrue = true;
 
