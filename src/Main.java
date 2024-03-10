@@ -1,6 +1,5 @@
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -8,23 +7,57 @@ public class Main {
         //House house1 = new House("inSpanndau", 25);
 
 
-        //ввести массив квартир:
-        //перевести массив в LinkedList через for цикл.
-        //List<Flat> flats = new LinkedList<>();
-//Евгений
+        Flat[] initialFlats = new Flat[] {
+                new Flat("One-room", 38,1, true),
+                new Flat("Two-room", 45,2,false),
+                new Flat("Three-room", 64,3,true),
+                new Flat("Studio", 45,1,true),
+                new Flat("Penthouse", 128,6,true),
+                new Flat("Communal", 22,1,false),
+                new Flat("Loft", 42, 1,true),
+                new Flat("Apartments", 78, 4,true),
+                new Flat("Two-room", 47,2,true),
+                new Flat("Penthouse", 142,7,true),
+                new Flat("Studio", 43,1,false),
+                new Flat("Communal", 26,1,false),
+                new Flat("One-room", 37,1, false),
+                new Flat("Four-room", 75,4, true),
+                new Flat("Loft", 40, 1,false)
+        };
+        //ввести массив квартир: введён
 
-        System.out.println("добро пожаловать в Манэджер квартир");
+//        for (Flat f: initialFlats) {
+//            System.out.println(f);
+//        }
+
+        //перевести массив в LinkedList через for цикл.
+//Евгений
+        List<Flat> flats = new LinkedList<>();
+
+        for (Flat f: initialFlats) {
+            flats.add(f);
+        }
+
+        Manager manager = new Manager();
+        String name; // переменная для имени пользователя
+
+        System.out.print(
+                "Добро пожаловать в наше приложение Менеджер квартир!\n" +
+                        "Введите Ваше имя: \n");
+
+        name = manager.scanner.nextLine(); // считываем введенное пользователем значение имени
+
+        System.out.print(name + ", " + "для Вас доступны следующие команды: \n"); // выводим это сообщение пользователю
+        manager.getHelp();
 
         boolean loopIsTrue = true;
 
-        Scanner scanner = new Scanner(System.in);
-        Manager manager = new Manager();
 
         do {
             manager.getIntro();
             String[] lineInParts = null;
             String argIn = null;
-            String lineIn = scanner.nextLine();
+            String lineIn = manager.scanner.nextLine();
             // history
 
             if (lineIn.contains(" ")) {
@@ -47,7 +80,7 @@ public class Main {
                     break;
 
                 case "info":
-                    manager.getInfo();
+                    manager.startInfoCommand();
                     break;
 
                 case "show":
@@ -55,7 +88,7 @@ public class Main {
                     break;
 
                 case "add":
-                    manager.add();
+                    manager.startAddCommand();
                     break;
 
                 case "update_by_id":
@@ -80,6 +113,10 @@ public class Main {
 
                 case "filter_less_than_balcony":
                     manager.filter_less_than_balcony();
+                    break;
+
+                case "print_ascending":
+                    manager.print_ascending();
                     break;
 
                 default:
