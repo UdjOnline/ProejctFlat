@@ -13,7 +13,8 @@ public class Flat {
     private Furnish furnish; //Поле может быть null
     private House house; //Поле не может быть null
 
-    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony) {
+    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, Furnish furnish,
+                House house) {
         this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
         Flat.count++;
 
@@ -21,12 +22,23 @@ public class Flat {
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.balcony = balcony;
+        this.furnish = furnish;
+        this.house = house;
     }       //Конструктор квартиры
 
-        @Override
-    public String toString() {
-        return this.id + " " + this.name + " " + this.area + " " + this.numberOfRooms + " " +  this.balcony;
+    //Дефолтный Конструктор квартиры (без вводных)
+    public Flat() {
+        this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
+        Flat.count++;
+
+        this.name = "Квартирка на отшибе";
+        this.area = 10785;
+        this.numberOfRooms = 1;
+        this.balcony = false;
+        this.furnish = null;
+        this.house = new House("У чёрта на рогах", 1978);
     }
+
 
     public long getId() {
         return id;

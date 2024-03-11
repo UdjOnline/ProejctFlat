@@ -115,7 +115,7 @@ public class Manager {
         } while (true);
 
         //добавление новой квартиры
-        Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony);
+        Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony,);
         flats.add(flat);
         System.out.println("квартира заданна");
         System.out.println(flat);
