@@ -1,4 +1,14 @@
 public class Utils {
+
+    public static boolean isString(String str) {
+        //Проверка на пустую Строку
+        if (!str.isEmpty()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public static boolean isInt(String str) {
         try {  // блок с которого все начнется тут
             // если завершится с ошибкой, то перейдет в catche блок
@@ -44,4 +54,5 @@ public class Utils {
         }
     }
     // используются для проверки в строке
+    // дополнительный комментарий
 }

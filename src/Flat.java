@@ -13,8 +13,7 @@ public class Flat {
     private Furnish furnish; //Поле может быть null
     private House house; //Поле не может быть null
 
-    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, Furnish furnish,
-                House house) {
+    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
         this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
         Flat.count++;
 
@@ -22,23 +21,22 @@ public class Flat {
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.balcony = balcony;
-        this.furnish = furnish;
         this.house = house;
+
     }       //Конструктор квартиры
 
-    //Дефолтный Конструктор квартиры (без вводных)
-    public Flat() {
-        this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
-        Flat.count++;
-
-        this.name = "Квартирка на отшибе";
-        this.area = 10785;
-        this.numberOfRooms = 1;
-        this.balcony = false;
-        this.furnish = null;
-        this.house = new House("У чёрта на рогах", 1978);
+    @Override
+    public String toString() {
+        return "Flat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                ", number of Rooms=" + numberOfRooms +
+                ", balcony=" + balcony +
+                ", furnish=" + furnish +
+                ", house=" + house +
+                '}';
     }
-
 
     public long getId() {
         return id;
@@ -112,17 +110,4 @@ public class Flat {
 //        this.house = house;
 //    }
 //
-
-    @Override
-    public String toString() {
-        return "Квартира {" +
-                "id-Номер: " + id +
-                ", название: " + name + '\'' +
-                ", район: " + area +
-                ", число комнат: " + numberOfRooms +
-                ", наличие балкона: " + balcony +
-                ", мебель: " + furnish +
-                ", дом: " + house +
-                '}';
-    }
 }
