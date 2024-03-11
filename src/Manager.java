@@ -2,7 +2,6 @@ import java.util.List;
 import java.util.Scanner;
 
 
-
 public class Manager {
 
     Scanner scanner;
@@ -97,7 +96,7 @@ public class Manager {
             } else {
                 System.err.println("неверный ввод, задайте цифры от 0 до 8");
             }
-        } while (!util.isInt(lineIn) || addNrRooms < 0 );
+        } while (!util.isInt(lineIn) || addNrRooms < 0);
 
 
         do {
@@ -123,18 +122,74 @@ public class Manager {
 
     public void update_by_id(String argsIn, List<Flat> flats) {
         int id;
-        Flat flat;
-        if (util.isInt(argsIn)) {
-            id = Integer.valueOf(argsIn);
 
-            flat = flats.get(id);
-
-        } else {
+        if (!Utils.isInt(argsIn)) {
             System.err.println("неверный ввод, надо цифры");
+        } else {
+            id = Integer.valueOf(argsIn);
+            for (Flat flat : flats) {
+                if (id == flat.getId()) {
+
+                    System.out.println("Какой из параметров вы хотите поменять?");
+                    String lineIn = scanner.nextLine();
+                    String arg;
+                    lineIn = lineIn.toLowerCase();
+
+                    switch (lineIn) {
+
+                        case "name":
+                            System.out.println("Задайте новое название ?");
+                            arg = scanner.nextLine();
+
+                            if (!util.isString(arg)) {
+                                System.err.println("не задонноя строка");
+                            } else {
+                                String newName = arg;
+                                flat.setName(newName);
+                            }
+                            break;
+
+                        case "area":
+                            System.out.println("Задайте новую площадь");
+                            arg = scanner.nextLine();
+
+                            if (!util.isInt(arg)) {
+                                System.err.println("не задоннaя строка");
+                            } else {
+                                int newArea = Integer.valueOf(arg);
+                                flat.setArea(newArea);
+                            }
+                            break;
+
+                        case "rooms":
+                            System.out.println("Задайте сколько");
+                            arg = scanner.nextLine();
+
+                            if (!Utils.isInt(arg)) {
+                                System.err.println("не задоннaя строка");
+                            } else {
+                                int newNumberOfRooms = Integer.valueOf(arg);
+                                flat.setNumberOfRooms(newNumberOfRooms);
+                            }
+                            break;
+
+                        default:
+                            System.err.println("не верно задонноя строка");
+
+                    }
+
+
+//                } else {
+                }
+                System.err.println("ID не найден");
+
+            }
         }
 
 
-        System.out.println("обновить значение элемента коллекции, по id ");
+        System.out.
+
+                println("обновить значение элемента коллекции, по id ");
     }
 
     public void remove_by_id(String argsIn) {
@@ -160,6 +215,6 @@ public class Manager {
     public void print_ascending() {
         System.out.println("вывести элементы коллекции в порядке возрастания! ");
     }
-    // и тут коментарий
+// и тут коментарий
 
 }
