@@ -24,7 +24,7 @@ public class House {
     }
 
     public void setYear(int year) {
-        if (year < 0 || year > 901) {
+        if (year < 0 || year > 2030) {
             System.out.println("неверно заданный возраст дома");
         } else {
             this.year = year;

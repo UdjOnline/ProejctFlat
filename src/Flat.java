@@ -13,7 +13,7 @@ public class Flat {
     private Furnish furnish; //Поле может быть null
     private House house; //Поле не может быть null
 
-    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony) {
+    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
         this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
         Flat.count++;
 
@@ -21,11 +21,21 @@ public class Flat {
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.balcony = balcony;
+        this.house = house;
+
     }       //Конструктор квартиры
 
-        @Override
+    @Override
     public String toString() {
-        return this.id + " " + this.name + " " + this.area + " " + this.numberOfRooms + " " +  this.balcony;
+        return "Flat{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", area=" + area +
+                ", number of Rooms=" + numberOfRooms +
+                ", balcony=" + balcony +
+                ", furnish=" + furnish +
+                ", house=" + house +
+                '}';
     }
 
     public long getId() {
