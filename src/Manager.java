@@ -160,6 +160,6 @@ public class Manager {
     public void print_ascending() {
         System.out.println("вывести элементы коллекции в порядке возрастания! ");
     }
-
+    // и тут коментарий
 
 }
