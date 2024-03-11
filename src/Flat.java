@@ -23,6 +23,11 @@ public class Flat {
         this.balcony = balcony;
     }       //Конструктор квартиры
 
+        @Override
+    public String toString() {
+        return this.id + " " + this.name + " " + this.area + " " + this.numberOfRooms + " " +  this.balcony;
+    }
+
     public long getId() {
         return id;
     }       //ID только смотреть, не переопредильть
