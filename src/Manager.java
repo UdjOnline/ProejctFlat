@@ -1,7 +1,4 @@
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 public class Manager {
@@ -43,15 +40,23 @@ public class Manager {
         //add new FLat
         Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony, furniture, h1);
         flats.add(flat);
-        System.out.println("Flat has been added to the list.");
+        System.out.println("Following flat has been added to the list:");
         System.out.println(flat);
     }
 
     //auxiliary method to allow user to enter flat's name
     private String addFlatName() {
-        System.out.println("Enter flat's name...");
-        String flatName = scanner.nextLine();
-        return flatName;
+        String flatName;
+        do {
+            System.out.println("Enter flat's name...");
+            flatName = scanner.nextLine();
+            if (flatName.equals("")) {
+                System.err.println("Name can't be empty.");
+                continue;
+            } else {
+                return flatName;
+            }
+        } while (true);
     }
 
     //auxiliary method to allow user to enter flat's area
@@ -63,9 +68,9 @@ public class Manager {
             lineIn = scanner.nextLine();
             if (Utils.isInt(lineIn)) {
                 addArea = Integer.valueOf(lineIn);
-                if (addArea > 200) {
+                if (addArea < 0 || addArea > 200) {
                     addArea = -1;
-                    System.err.println("Unacceptable area, can't be more than 200 square meters.");
+                    System.err.println("Unacceptable area, must be between 0 and 200 square meters.");
                 }
             } else {
                 System.err.println("Unacceptable entry, a number is required.");
@@ -102,6 +107,7 @@ public class Manager {
         boolean addBalcony = false;
         do {
             System.out.println("Please enter whether the flat has a balcony");
+            System.out.println("yes/ja  or  no/nein");
             lineIn = scanner.nextLine().toLowerCase();
             if (lineIn.equals("yes") || lineIn.equals("ja")) {
                 addBalcony = true;
@@ -142,7 +148,7 @@ public class Manager {
                         case "LITTLE":
                             return Furnish.LITTLE;
                         default:
-                            System.out.println("Unacceptable entry, please try again.");
+                            System.err.println("Unacceptable entry, please try again.");
                     }
                 } while (true);
             } else if (lineIn.equals("no") || lineIn.equals("nein")) {
@@ -165,14 +171,14 @@ public class Manager {
             System.out.println("Enter the house's building year:");
             String line = scanner.nextLine();
             if (!Utils.isInt(line)) {
-                System.out.println("That's no number!");
+                System.err.println("That's no number!");
                 continue;
             }
             int year = Integer.parseInt(line);
-            if (year < 2030 && year > 0) {
+            if (year <= 2030 && year >= 0) {
                 return year;
             }
-            System.out.println("Must be lower than 2030 and higher than 0!");
+            System.err.println("The year must be lower than 2030 and higher than 0!");
         }
     }
 
@@ -182,7 +188,7 @@ public class Manager {
             System.out.println("Please enter the house's name: ");
             String line = scanner.nextLine();
             if (!Utils.isString(line)) {
-                System.out.println("That's an empty line!");
+                System.err.println("That's an empty line!");
                 continue;
             }
             return line;
@@ -192,14 +198,14 @@ public class Manager {
     //CLEAR the list - with a safeguard against accidental clearing
     public void clear() {
         System.out.println("Delete all flats from the list!");
-        System.out.println("Are you sure? The process is irreversible! Type 'ja' or 'yes' to confirm.");
+        System.err.println("Are you sure? The process is irreversible! Type 'ja' or 'yes' to confirm.");
         String lineIn = scanner.nextLine().toLowerCase();
         if (lineIn.equals("ja") || lineIn.equals("yes")) {
             flats.clear();
             System.out.println("All flats deleted");
 
         } else {
-            System.out.println("List clearing aborted!");
+            System.err.println("List clearing aborted!");
         }
     }
 
@@ -223,7 +229,7 @@ public class Manager {
                 }
             }
         } else {
-            System.out.println("Unacceptable entry...");
+            System.err.println("Unacceptable entry...");
         }
     }
 
@@ -231,7 +237,7 @@ public class Manager {
     public void help() {
         // Roman
         System.out.println("help: the list of all commands \n" +
-                "info: provide information about our list of flats \n" +
+                "info: provide information about this manager \n" +
                 "show: show all flats in the list: \n" +
                 "add: add new flat to the list \n" +
                 "update : update the flat with id {id} \n" +
@@ -260,37 +266,31 @@ public class Manager {
     }
 
     //REMOVE A FLAT BY ID
-    public void remove_by_id() {
-        //read ID, find if ithere is a flat with such id, return index
-        int index = findListIndexByFlatID();
+    public void remove_by_id(String args) {
+        //read ID, find if it here is a flat with such id, return index
+        int index = findListIndexByFlatID(args);
         if (index!=-1) {
             flats.remove(index);
-            System.out.println("Flat with list index "+index+" removed from the list!");
+            System.out.println("Flat with ID "+args+" removed from the list!");
         } else {
-            System.out.println("No apartment with such ID found!");
+            System.err.println("No apartment with such ID found!");
         }
     }
 
     //asks for a flat id, then looks which index does it have in flats List
-    private int findListIndexByFlatID() {
-        //reading the id from the user
-        String argsIn;
-        do {
-            System.out.println("Please enter the ID of the apartment:");
-            argsIn = scanner.nextLine();
-            if (!Utils.isLong(argsIn)) {
-                System.err.println("Unacceptable entry, numbers required!");
-            } else {
-                break;
-            }
-        } while (true);
-        //searching got the flat with this ID and grabbing its index
+    private int findListIndexByFlatID(String args) {
         int index = -1;
-        long id = Long.valueOf(argsIn);
-        for (int i = 0; i<flats.size(); i++) {
-            if (flats.get(i).getId()==id) {
-                index = i;
-                break;
+        //reading the id from the user
+        if (!Utils.isLong(args)) {
+            System.err.println("Unacceptable entry, numbers required!");
+        } else {
+            //searching got the flat with this ID and grabbing its index
+            long id = Long.valueOf(args);
+            for (int i = 0; i < flats.size(); i++) {
+                if (flats.get(i).getId() == id) {
+                    index = i;
+                    break;
+                }
             }
         }
         return index;
@@ -324,19 +324,20 @@ public class Manager {
         System.out.println("We eagerly await your feedback!");
     }
 
+
     //UPDATE FLAT BY ID
-    public void update_by_id() {
+    public void update_by_id(String args) {
         //read ID, find if ithere is a flat with such id, return index
-        int index = findListIndexByFlatID();
+        int index = findListIndexByFlatID(args);
         //if no such flat - get out
         if (index==-1) {
-            System.out.println("there is no flat with such ID!");
+            System.err.println("There is no flat with such ID!");
             return;
         }
         boolean looper = true;
         do {
             // ask for parameter to change
-            System.out.println("Please let us know which parameter of the apartment do you wish to choose.");
+            System.out.println("Please let us know which parameter of the apartment do you wish to change.");
             System.out.println("Acceptable parameters are: \n" +
                     "name, \n" +
                     "area, \n" +
@@ -344,9 +345,8 @@ public class Manager {
                     "balcony, \n" +
                     "furnish, \n" +
                     "house");
-            System.out.println("Type 'done' if you wish to stop updating teh apartment.");
-            String lineIn = scanner.nextLine();
-            lineIn = lineIn.toLowerCase();
+            System.out.println("Type 'done' if you wish to stop updating the apartment.");
+            String lineIn = scanner.nextLine().toLowerCase();
             //switch case launching add-commands to read the values and apply them
             // to the flat with index [index]
             switch (lineIn) {
@@ -394,30 +394,50 @@ public class Manager {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public void print_ascending() {
-        System.out.println("вывести элементы коллекции в порядке возрастания! ");
+        boolean looper = true;
+        do {
+            // ask for parameter to change
+            System.out.println("Please let us know by which parameter do you wish to sort the flats.");
+            System.out.println("Acceptable parameters are: \n" +
+                    "name, \n" +
+                    "area, \n" +
+                    "rooms (for the number of rooms)");
+            String lineIn = scanner.nextLine().toLowerCase();
+            //switch case chooses by which parameter the flats are sorted
+            switch (lineIn) {
+                case "name":
+                    System.out.println("Flats sorted by name:");
+                    FlatNameComparator compName = new FlatNameComparator();
+                    Collections.sort(flats,compName);
+                    show();
+                    looper = false;
+                    break;
+                case "area":
+                    System.out.println("Flats sorted by area:");
+                    FlatAreaComparator compArea = new FlatAreaComparator();
+                    Collections.sort(flats,compArea);
+                    show();
+                    looper = false;
+                    break;
+                case "rooms":
+                    System.out.println("Flats sorted by number of rooms:");
+                    FlatRoomNumberComparator compRoom = new FlatRoomNumberComparator();
+                    Collections.sort(flats,compRoom);
+                    show();
+                    looper = false;
+                    break;
+                default:
+                    System.err.println("Unacceptable entry! Try again:");
+            }
+        } while (looper);
     }
 
 
-
-
+    /*
+    // these functions are not needed in current version of the manager
+    // they were supposed to search for a house in the flats list by house's name
+    // and create a new house if there was no house with such name
     public House findHouseByName(String name) {
         for (Flat flat : flats) {
             if (flat.getHouse().getName().equals(name))
@@ -433,7 +453,7 @@ public class Manager {
         return home;
     }
 
+     */
 
-// и тут коментарий
 
 }

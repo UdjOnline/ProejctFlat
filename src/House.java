@@ -1,24 +1,20 @@
 public class House {
-    private String name; //Поле не может быть null
-    private int year; //Максимальное значение поля: 901, Значение поля должно быть больше 0
+    private String name; //can't be null
+    private int year; //between 0 and 2030
 
-
-
-    public String getName() {
-        return name;
-    }
-
+    //Constructor
     public House(String name, int year) {
         this.name = name;
         this.year = year;
     }
 
+    //getters and setters
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
-        if (this.name.equals(null)) {
-            System.out.println("Поле не может быть пустым");
-        } else {
-            this.name = name;
-        }
+        this.name = name;
     }
 
     public int getYear() {
@@ -26,15 +22,11 @@ public class House {
     }
 
     public void setYear(int year) {
-        if (year < 0 || year > 2030) {
-            System.out.println("неверно заданный возраст дома");
-        } else {
-            this.year = year;
-        }   // Реалисацию надо улутьшить на пример на год построики
+        this.year = year;
     }
 
     @Override
     public String toString() {
-        return "Дом " + this.name + " с возрастом:  " + this.year ;
+        return " The house is named " + this.name + " and it was built in  " + this.year+"." ;
     }
 }

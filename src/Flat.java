@@ -1,21 +1,22 @@
+import java.util.Comparator;
+
 public class Flat {
 
     private static int count = 1;
 
-    private long id; //Значение поля должно быть больше 0,
-    //Значение этого поля должно быть уникальным,
-    //Значение этого поля должно генерироваться автоматически
-    private String name; //Поле не может быть null, Строка не может быть пустой
-    private Integer area; //Поле может быть null, Значение поля должно быть больше 0
-    private Integer numberOfRooms; //Максимальное значение поля: 8,
-    //Значение поля должно быть больше 0
+    private long id; //Field must be bigger than zero,
+    //the value must be unique,
+    //the value must be generated automatically
+    private String name; //can't be null or empty
+    private Integer area; //can't be null, must be bigger than zero
+    private Integer numberOfRooms; //maximum value 8, must be bigger than zero
     private boolean balcony;
-    private Furnish furnish; //Поле может быть null
-    private House house; //Поле не может быть null
+    private Furnish furnish; //CAN be null
+    private House house; //can't be null
 
-    //Конструктор квартиры  - c мебелью!
+    //FLAT CONSTRUCTOR - with furniture
     public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, Furnish furnish, House house) {
-        this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
+        this.id = 10115 * 100000 + Flat.count; //Berlin postal index + counter
         Flat.count++;
 
         this.name = name;
@@ -26,9 +27,9 @@ public class Flat {
         this.house = house;
     }
 
-    //Конструктор квартиры - без мебели
+    //FLAT CONSTRUCTOR - without furniture
     public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
-        this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
+        this.id = 10115 * 100000 + Flat.count; //Berlin postal index + counter
         Flat.count++;
 
         this.name = name;
@@ -41,33 +42,38 @@ public class Flat {
 
     @Override
     public String toString() {
-        return "Flat{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", area=" + area +
-                ", number of Rooms=" + numberOfRooms +
-                ", balcony=" + balcony +
-                ", furnish=" + furnish +
-                ", house=" + house +
-                '}';
+        String p1 = "A flat " +
+                "with id number " + id +
+                ", named " + name + '\'' +
+                ", " + area +
+                " square meters, with " + numberOfRooms +
+                " rooms.";
+        String p2 = "";
+        if (balcony) {
+            p2 = " It has a balcony.";
+        } else {
+            p2 = " It has no balcony.";
+        }
+        String p3 = "";
+        if (!(furnish == null))
+            p3 = " This flat has "+furnish+" furnishing.";
+        String p4 = "";
+        if (!(house == null))
+            p4 = house.toString();
+        return p1+p2+p3+p4;
     }
 
+    //GETTERS AND SETTERS
     public long getId() {
         return id;
-    }       //ID только смотреть, не переопредильть
+    }       //ID can only be viewed, not edited
 
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
-        if (name.equals(null)) {
-            System.out.println("Поле не может быть NULL");
-        } else if (name.equals("")) {
-            System.out.println("Строка не может быть пустой");
-        } else {
-            this.name = name;
-        }
+        this.name = name;
     }
 
     public Integer getArea() {
@@ -75,23 +81,15 @@ public class Flat {
     }
 
     public void setArea(Integer area) {
-        if (area > 0) {
-            this.area = area;
-        } else {
-            System.out.println("Значение поля должно быть больше 0");
-        }
-    } //
+        this.area = area;
+    }
 
     public Integer getNumberOfRooms() {
         return numberOfRooms;
     }
 
     public void setNumberOfRooms(Integer numberOfRooms) {
-        if (numberOfRooms > 0 && numberOfRooms < 9) {
-            this.numberOfRooms = numberOfRooms;
-            } else {
-            System.out.println("Значение поля должно быть больше 0");
-        }
+        this.numberOfRooms = numberOfRooms;
     }
 
     public boolean isBalcony() {
@@ -101,19 +99,6 @@ public class Flat {
     public void setBalcony(boolean balcony) {
         this.balcony = balcony;
     }
-
-    /*
-    public void setBalcony(String balcon) {
-        if (balcon.equals("yes") || balcon.equals("ja")) {
-            this.balcony = true;
-        } else if (balcon.equals("no") || balcon.equals("nein")) {
-            this.balcony = false;
-        }else {
-            System.out.println("неверное задание балкона");
-        }
-    }
-
-     */
 
     public Furnish getFurnish() {
         return furnish;
@@ -131,4 +116,25 @@ public class Flat {
        this.house = house;
     }
 
+}
+
+class FlatAreaComparator implements Comparator<Flat> {
+    @Override
+    public int compare(Flat f1, Flat f2) {
+        return f1.getArea()-f2.getArea();
+    }
+}
+
+class FlatRoomNumberComparator implements Comparator<Flat> {
+    @Override
+    public int compare(Flat f1, Flat f2) {
+        return f1.getNumberOfRooms()-f2.getNumberOfRooms();
+    }
+}
+
+class FlatNameComparator implements Comparator<Flat> {
+    @Override
+    public int compare(Flat f1, Flat f2) {
+        return f1.getName().compareTo(f2.getName());
+    }
 }
