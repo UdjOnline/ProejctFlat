@@ -2,6 +2,8 @@ public class House {
     private String name; //Поле не может быть null
     private int year; //Максимальное значение поля: 901, Значение поля должно быть больше 0
 
+
+
     public String getName() {
         return name;
     }

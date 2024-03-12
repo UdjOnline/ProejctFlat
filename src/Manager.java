@@ -102,6 +102,7 @@ public class Manager {
     public void addFlat() { //добавляем Квартиру
         String lineIn;
         String addName = null;
+        Furnish furniture = null;
         int addArea = -1;
         int addNrRooms = -1;
         boolean addBalcony = false;
@@ -143,10 +144,10 @@ public class Manager {
             }
         } while (!Utils.isInt(lineIn) || addNrRooms < 0);
 
-
+        //ADD
         do {
             System.out.println("введите есть ли балкон в Квартиры");
-            lineIn = scanner.nextLine();
+            lineIn = scanner.nextLine().toLowerCase();
             if (lineIn.equals("yes") || lineIn.equals("ja")) {
                 addBalcony = true;
                 break;
@@ -158,12 +159,53 @@ public class Manager {
             }
         } while (true);
 
+        //ADD FURNITURE
+        do {
+            System.out.println("если хотите, введите описание мебелировки  ");
+            System.out.println("yes/ja для ввода, no/nein для отказа");
+            lineIn = scanner.nextLine().toLowerCase();
+            if (lineIn.equals("yes") || lineIn.equals("ja")) {
+                furniture = addFurniture();
+                break;
+            } else if (lineIn.equals("no") || lineIn.equals("nein")) {
+                break;
+            } else {
+                System.err.println("неверный ввод");
+            }
+        } while (true);
+
+        //ADD HOUSE
         House h1 = new House(houseName(), houseYear());
         //добавление новой квартиры
-        Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony, h1);
+        Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony, furniture, h1);
         flats.add(flat);
         System.out.println("квартира заданна");
         System.out.println(flat);
+    }
+
+    public Furnish addFurniture() {
+        String lineIn;
+        Furnish furniture;
+        do {
+            System.out.println("Определите уровень мебелировки:  ");
+            System.out.println("DESIGNER,\n" +
+                    "    NONE,\n" +
+                    "    BAD,\n" +
+                    "    LITTLE");
+            lineIn = scanner.nextLine().toUpperCase();
+            switch (lineIn) {
+                case "DESIGNER":
+                    return Furnish.DESIGNER;
+                case "NONE":
+                    return Furnish.NONE;
+                case "BAD":
+                    return Furnish.BAD;
+                case "LITTLE":
+                    return Furnish.LITTLE;
+                default:
+                    System.out.println("неверный ввод");
+            }
+        } while (true);
     }
 
     public void update_by_id(String argsIn) {
