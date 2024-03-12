@@ -37,9 +37,7 @@ public class Main {
             manager.flats.add(f);
         }
 
-        String lastCommand;
-
-        String userName; // переменная для имени пользователя
+                String userName; // переменная для имени пользователя
 
         System.out.print(
                 "Добро пожаловать в наше приложение Менеджер квартир!\n" +
