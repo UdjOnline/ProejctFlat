@@ -7,146 +7,96 @@ public class Manager {
 
     List<Flat> flats;
     LinkedList<String> commands;
-
     Scanner scanner;
+    Utils util = new Utils();
 
-    // privat и getter and setter
+    // MANAGER CONSTRUCTOR
     Manager() {
         flats = new LinkedList<>();
         commands = new LinkedList<>();
         scanner = new Scanner(System.in);
-
     }
 
-
-    Utils util = new Utils();
-
-    public int houseYear() {
-        while (true) {
-            System.out.println("Введите год постройки дома: ");
-            String line = scanner.nextLine();
-            if (!Utils.isInt(line)) {
-                System.out.println("Это не число!");
-                continue;
-            }
-            int year = Integer.parseInt(line);
-            if (year < 2030 && year > 0) {
-                return year;
-            }
-            System.out.println("Должно быть меньше 2030 и больше 0!");
+    //ADD COMMAND to the command list (commands)
+    public void addCommand(String lastCommand) {
+        System.out.println("Adding current command to the list..");
+        commands.add(lastCommand);
+        if (commands.size() > 15) {
+            commands.removeFirst();
         }
     }
 
-    public String houseName() {
-        while (true) {
-            System.out.println("Введите название дома: ");
-            String line = scanner.nextLine();
-            if (!Utils.isString(line)) {
-                System.out.println("это пустая строка!");
-                continue;
-            }
-            return line;
-        }
+    //ADD FLAT
+    public void addFlat() {
+        String addName = addFlatName();
+        int addArea = addFlatArea();
+        int addNrRooms = addFlatNrRooms();
+        boolean addBalcony = addFlatBalcony();
+        Furnish furniture = addFlatFurniture();
+        House h1 = new House(addHouseName(), addHouseYear());
+        //добавление новой квартиры
+        Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony, furniture, h1);
+        flats.add(flat);
+        System.out.println("Flat has been added to the list.");
+        System.out.println(flat);
     }
 
-    public House findHouseByName(String name) {
-        for (Flat flat : flats) {
-            if (flat.getHouse().getName().equals(name))
-                return flat.getHouse();
-        }
-        return null;
+    //auxiliary method to allow user to enter flat's name
+    private String addFlatName() {
+        System.out.println("Add a new flat!");
+        System.out.println("Enter flat's name...");
+        String flatName = scanner.nextLine();
+        return flatName;
     }
 
-    public House getOrCreateHouse(String name, int year) {
-        House home = this.findHouseByName(name);
-        if (home == null)
-            home = new House(name, year);
-        return home;
-    }
-
-
-    public void getIntro() {
-        System.out.println("Введите, что надо сделать");
-    }
-
-    public void getHelp() {
-        // Roman
-        System.out.println("help: список доступных команд \n" +
-                "info: cписок всех квартир \n" +
-                "show: показать все квартиры в списке: \n" +
-                "add: добавить новую квартиру в список \n" +
-                "update_by_id {id}: обновить данные квартиры с указанным id \n" +
-                "remove_by_id {id}: удалить квартиру с данным id \n" +
-                "clear: очмстить список квартир (используйте осторожно!) \n" +
-                "exit: завершить программу без сохранения в файл \n" +
-                "remove_head {head}: вывести первую квартиру списка и удалить её \n" +
-                "history: вывести последние 15 команд \n" +
-                "filter_balcony: вывести элементы значения поля balcony \n" +
-                "print_ascending {print}: вывести список в порядке возрастания");
-    }
-
-    public void startInfoCommand() { //startInfoCommand
-        //Romam
-        System.out.println("Здесь будет выданна Информация о коллекции!");
-    }
-
-    public void show() {
-        //Sergej
-        System.out.println("Здесь будет выданны все элементы коллекции!");
-        for (Flat flat : flats) {
-            System.out.println(flat);
-        }
-    }
-
-
-    public void addFlat() { //добавляем Квартиру
+    //auxiliary method to allow user to enter flat's area
+    private int addFlatArea() {
         String lineIn;
-        String addName = null;
-        Furnish furniture = null;
         int addArea = -1;
-        int addNrRooms = -1;
-        boolean addBalcony = false;
-
-        System.out.println("добавить новую Квартиру!");
-
-        System.out.println("введите Название новой Квартиры");
-        lineIn = scanner.nextLine();
-        addName = lineIn;
-
         do {
-            System.out.println("введите размер новой Квартиры в квадратных метрах");
+            System.out.println("Enter flat's area in square meters...");
             lineIn = scanner.nextLine();
             if (Utils.isInt(lineIn)) {
                 addArea = Integer.valueOf(lineIn);
                 if (addArea > 200) {
                     addArea = -1;
-                    System.err.println("неверный ввод, не более 200 кв метров");
+                    System.err.println("Unacceptable area, can't be more than 200 square meters.");
                 }
             } else {
-                System.err.println("неверный ввод, задайте цифры");
+                System.err.println("Unaccepatble entry, a number is required.");
             }
         } while (!Utils.isInt(lineIn) || addArea < 0);
+        return addArea;
+    }
 
+    //auxiliary method to allow user to enter the number of flat's rooms
+    private int addFlatNrRooms() {
+        String lineIn;
+        int addNrRooms = -1;
         do {
-//            here:
-            System.out.println("введите количество комнат в новой Квартиры");
+            System.out.println("Enter the number of flat's rooms...");
             lineIn = scanner.nextLine();
             if (Utils.isInt(lineIn)) {
                 addNrRooms = Integer.valueOf(lineIn);
                 if (addNrRooms < 0 || addNrRooms > 8) {
-                    System.err.println("неверный ввод, задайте цифры от 0 до 8");
+                    System.err.println("Unacceptable entry, provide number of rooms between 0 and 8.");
                     addNrRooms = -1;
-//                    continue here;
-//                      //не работает сброс в начало цикла
+                    //continue here;
+                    //break to the cycle's beginning doesn't work
                 }
             } else {
-                System.err.println("неверный ввод, задайте цифры от 0 до 8");
+                System.err.println("Unacceptable entry, provide number of rooms between 0 and 8.");
             }
         } while (!Utils.isInt(lineIn) || addNrRooms < 0);
+        return addNrRooms;
+    }
 
-        //ADD
+    //auxiliary method to allow user to enter whether the flat has a balcony
+    private boolean addFlatBalcony() {
+        String lineIn;
+        boolean addBalcony = false;
         do {
-            System.out.println("введите есть ли балкон в Квартиры");
+            System.out.println("Please enter whether the flat has a balcony");
             lineIn = scanner.nextLine().toLowerCase();
             if (lineIn.equals("yes") || lineIn.equals("ja")) {
                 addBalcony = true;
@@ -155,59 +105,203 @@ public class Manager {
                 addBalcony = false;
                 break;
             } else {
-                System.err.println("неверный ввод");
+                System.err.println("Unacceptable entry, please try again");
             }
         } while (true);
+        return addBalcony;
+    }
 
-        //ADD FURNITURE
+    //auxiliary method to allow user to grade the flat's furniture
+    private Furnish addFlatFurniture() {
+        String lineIn;
+        Furnish furniture = null;
         do {
-            System.out.println("если хотите, введите описание мебелировки  ");
-            System.out.println("yes/ja для ввода, no/nein для отказа");
+            System.out.println("If you wish, determine the room's furnishing.");
+            System.out.println("yes/ja to continue, no/nein to skip");
             lineIn = scanner.nextLine().toLowerCase();
             if (lineIn.equals("yes") || lineIn.equals("ja")) {
-                furniture = addFurniture();
-                break;
+                do {
+                    System.out.println("Determine the level of furnishing:  ");
+                    System.out.println("DESIGNER,\n" +
+                            "    NONE,\n" +
+                            "    BAD,\n" +
+                            "    LITTLE");
+                    lineIn = scanner.nextLine().toUpperCase();
+                    switch (lineIn) {
+                        case "DESIGNER":
+                            return Furnish.DESIGNER;
+                        case "NONE":
+                            return Furnish.NONE;
+                        case "BAD":
+                            return Furnish.BAD;
+                        case "LITTLE":
+                            return Furnish.LITTLE;
+                        default:
+                            System.out.println("Unacceptable entry, please try again.");
+                    }
+                } while (true);
             } else if (lineIn.equals("no") || lineIn.equals("nein")) {
-                break;
+                return furniture;
             } else {
-                System.err.println("неверный ввод");
+                System.err.println("Unacceptable entry, please try again.");
             }
         } while (true);
-
-        //ADD HOUSE
-        House h1 = new House(houseName(), houseYear());
-        //добавление новой квартиры
-        Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony, furniture, h1);
-        flats.add(flat);
-        System.out.println("квартира заданна");
-        System.out.println(flat);
     }
 
-    public Furnish addFurniture() {
-        String lineIn;
-        Furnish furniture;
+    //auxiliary method to allow user to provide house's building year
+    private int addHouseYear() {
+        while (true) {
+            System.out.println("Enter the house's building year:");
+            String line = scanner.nextLine();
+            if (!Utils.isInt(line)) {
+                System.out.println("That's no number!");
+                continue;
+            }
+            int year = Integer.parseInt(line);
+            if (year < 2030 && year > 0) {
+                return year;
+            }
+            System.out.println("Must be lower than 2030 and higher than 0!");
+        }
+    }
+
+    //auxiliary method to allow user to provide house's name
+    private String addHouseName() {
+        while (true) {
+            System.out.println("Please enter the house's name: ");
+            String line = scanner.nextLine();
+            if (!Utils.isString(line)) {
+                System.out.println("That's an empty line!");
+                continue;
+            }
+            return line;
+        }
+    }
+
+    //SHOW THE LIST OF FLATS FILTERED BY BALCONY!
+    public void filter_balcony() {
+        System.out.println("Show all flats with or without balconies! \n " +
+                "with / mit = with a balcony, without / ohne = without one.");
+        String lineIn = scanner.nextLine().toLowerCase();
+        if (lineIn.equals("with") || lineIn.equals("mit")) {
+            System.out.println("Showing all flats with a balcony:");
+            for (Flat flat : flats) {
+                if (flat.isBalcony()) {
+                    System.out.println(flat);
+                }
+            }
+        } else if (lineIn.equals("without") || lineIn.equals("ohne")) {
+            System.out.println("Showing all flats without a balcony:");
+            for (Flat flat : flats) {
+                if (!flat.isBalcony()) {
+                    System.out.println(flat);
+                }
+            }
+        } else {
+            System.out.println("Unacceptable entry...");
+        }
+    }
+
+    //CLEAR the list - with a safeguard against accidental clearing
+    public void clear() {
+        System.out.println("Delete all flats from the list!");
+        System.out.println("Are you sure? The process is irreversible! Type 'ja' or 'yes' to confirm.");
+        String lineIn = scanner.nextLine().toLowerCase();
+        if (lineIn.equals("ja") || lineIn.equals("yes")) {
+            flats.clear();
+            System.out.println("All flats deleted");
+
+        } else {
+            System.out.println("List clearing aborted!");
+        }
+    }
+
+    //SHOW HELP with the list of all commands
+    public void help() {
+        // Roman
+        System.out.println("help: the list of all commands \n" +
+                "info: provide information about our list of flats \n" +
+                "show: show all flats in the list: \n" +
+                "add: add new flat to the list \n" +
+                "update_by_id {id}: update the flat with id {id} \n" +
+                "remove_by_id {id}: remove the flat with id {id} from the list \n" +
+                "clear: delete all flats from the list \n" +
+                "exit: exit program \n" +
+                "remove_head {head}: remove first flat fromt he list and show it \n" +
+                "history: show the last 15 commands \n" +
+                "filter_balcony: show all flats with/without balcony \n" +
+                "print_ascending {print}: show the list of flats in ascending order");
+    }
+
+    //SHOW COMMAND HISTORY - last 15 commands or less
+    public void history() {
+        System.out.println("The last 15 commands were:");
+        for (String str : commands) {
+            System.out.println(str);
+        }
+    }
+
+    //REMOVE THE FIRST ELEMENT AND SHOW IT
+    public void remove_head() {
+        System.out.println("Removing the first flat in the list!");
+        System.out.println("This is what it was:");
+        System.out.println(flats.remove(0));
+    }
+
+    //REMOVE A FLAT BY ID
+    public void remove_by_id() {
+        int index = -1;
+        String argsIn;
         do {
-            System.out.println("Определите уровень мебелировки:  ");
-            System.out.println("DESIGNER,\n" +
-                    "    NONE,\n" +
-                    "    BAD,\n" +
-                    "    LITTLE");
-            lineIn = scanner.nextLine().toUpperCase();
-            switch (lineIn) {
-                case "DESIGNER":
-                    return Furnish.DESIGNER;
-                case "NONE":
-                    return Furnish.NONE;
-                case "BAD":
-                    return Furnish.BAD;
-                case "LITTLE":
-                    return Furnish.LITTLE;
-                default:
-                    System.out.println("неверный ввод");
+            System.out.println("Please enter the ID of the apartment to be removed");
+            argsIn = scanner.nextLine();
+            if (!Utils.isLong(argsIn)) {
+                System.err.println("Unacceptable entry, numbers required!");
+            } else {
+                break;
             }
         } while (true);
+        System.out.println("Removing flat from the list by ID! ");
+        long id = Long.valueOf(argsIn);
+        for (int i = 0; i<flats.size(); i++) {
+            if (flats.get(i).getId()==id) {
+                index = i;
+                break;
+            }
+        }
+        if (index!=-1) {
+            flats.remove(index);
+            System.out.println("Flat with list index "+index+" removed from the list!");
+        } else {
+            System.out.println("No apartment with such ID found!");
+        }
     }
 
+    //SHOW ALL FLATS
+    public void show() {
+        //Sergej
+        System.out.println("Showing all flats:");
+        for (Flat flat : flats) {
+            System.out.println(flat);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //UPDATE FLAT BY ID
     public void update_by_id(String argsIn) {
         int id;
 
@@ -292,77 +386,43 @@ public class Manager {
                 println("обновить значение элемента коллекции, по id ");
     }
 
-    public void remove_by_id(String argsIn) {
-        System.out.println("удаляем элемент из коллекции по его id! ");
 
-        if (!Utils.isInt(argsIn)) {
-            System.err.println("неверный ввод, надо цифры");
-        } else {
-            int id = Integer.valueOf(argsIn);
-            System.out.println(flats.remove(id));
-        }
-    }
 
-    public void clear() {
-        System.out.println("очистить коллекцию! ");
-        System.out.println("Вы уверены? ja/yes ");
-        String lineIn = scanner.nextLine().toLowerCase();
-        if (lineIn.equals("ja") || lineIn.equals("yes")) {
-            flats.clear();
-            System.out.println("Всё удалено");
 
-        } else {
-            System.out.println("abort");
-        }
-    }
 
-    public void remove_head() {
-        System.out.println("вывести первый элемент коллекции и удалить его! ");
-        System.out.println(flats.remove(0));
-    }
 
-    public void addCommand(String lastCommand) {
 
-        commands.add(lastCommand);
-        if (commands.size() > 15) {
-            commands.removeFirst();
-        }
-    }
 
-    public void history() {
-        System.out.println("Выводит последние 15 Команд");
 
-        for (String str : commands) {
-            System.out.println(str);
-        }
-    }
-
-    public void filter_balcony() {
-        System.out.println("вывести элементы, значение с балконом! или без \n " +
-                "with / mit = с Балконом, without / ohne = без Балкона");
-        String lineIn = scanner.nextLine().toLowerCase();
-        if (lineIn.equals("with") || lineIn.equals("mit")) {
-            System.out.println("Выдаю квартиры с балконом");
-            for (Flat flat : flats) {
-                if (flat.isBalcony()) {
-                    System.out.println(flat);
-                }
-            }
-        } else if (lineIn.equals("without") || lineIn.equals("ohne")) {
-            System.out.println("Выдаю квартиры без балкона");
-            for (Flat flat : flats) {
-                if (!flat.isBalcony()) {
-                    System.out.println(flat);
-                }
-            }
-        } else {
-            System.out.println("не праввельный ввод");
-        }
-    }
 
     public void print_ascending() {
         System.out.println("вывести элементы коллекции в порядке возрастания! ");
     }
+
+
+
+    public void startInfoCommand() { //startInfoCommand
+        //Romam
+        System.out.println("Здесь будет выданна Информация о коллекции!");
+    }
+
+
+    public House findHouseByName(String name) {
+        for (Flat flat : flats) {
+            if (flat.getHouse().getName().equals(name))
+                return flat.getHouse();
+        }
+        return null;
+    }
+
+    public House getOrCreateHouse(String name, int year) {
+        House home = this.findHouseByName(name);
+        if (home == null)
+            home = new House(name, year);
+        return home;
+    }
+
+
 // и тут коментарий
 
 }
