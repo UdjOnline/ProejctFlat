@@ -13,6 +13,20 @@ public class Flat {
     private Furnish furnish; //Поле может быть null
     private House house; //Поле не может быть null
 
+    //Конструктор квартиры  - c мебелью!
+    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, Furnish furnish, House house) {
+        this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
+        Flat.count++;
+
+        this.name = name;
+        this.area = area;
+        this.numberOfRooms = numberOfRooms;
+        this.balcony = balcony;
+        this.furnish = furnish;
+        this.house = house;
+    }
+
+    //Конструктор квартиры
     public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
         this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
         Flat.count++;
@@ -21,9 +35,9 @@ public class Flat {
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.balcony = balcony;
+        this.furnish = null;
         this.house = house;
-
-    }       //Конструктор квартиры
+    }
 
     @Override
     public String toString() {
