@@ -251,7 +251,14 @@ public class Manager {
     }
 
     public void remove_by_id(String argsIn) {
-        System.out.println("удалить элемент из коллекции по его id! ");
+        System.out.println("удаляем элемент из коллекции по его id! ");
+
+        if (!Utils.isInt(argsIn)) {
+            System.err.println("неверный ввод, надо цифры");
+        } else {
+            int id = Integer.valueOf(argsIn);
+            System.out.println(flats.remove(id));
+        }
     }
 
     public void clear() {
