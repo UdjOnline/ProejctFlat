@@ -1,8 +1,7 @@
 public class Main {
     public static void main(String[] args) {
 
-        //House house1 = new House("inSpanndau", 25);
-
+        //data for manager testing
         House[] house = {
                 new House("Hrushevka", 1974),
                 new House("Monolithic", 1900),
@@ -13,51 +12,50 @@ public class Main {
         Flat[] initialFlats = new Flat[]{
                 new Flat("One-room", 38, 1, true, house[0]),
                 new Flat("Two-room", 45, 2, false, house[0]),
-                new Flat("Three-room", 64, 3, true, house[0]),
+                new Flat("Three-room", 64, 3, true, Furnish.LITTLE , house[0]),
                 new Flat("Studio", 45, 1, true, house[0]),
                 new Flat("Penthouse", 128, 6, true, house[1]),
                 new Flat("Communal", 22, 1, false, house[1]),
                 new Flat("Loft", 42, 1, true, house[1]),
-                new Flat("Apartments", 78, 4, true, house[2]),
+                new Flat("Apartments", 78, 4, true, Furnish.DESIGNER , house[2]),
                 new Flat("Two-room", 47, 2, true, house[2]),
                 new Flat("Penthouse", 142, 7, true, house[2]),
                 new Flat("Studio", 43, 1, false, house[2]),
                 new Flat("Communal", 26, 1, false, house[3]),
                 new Flat("One-room", 37, 1, false, house[3]),
                 new Flat("Four-room", 75, 4, true, house[3]),
-                new Flat("Loft", 40, 1, false, house[3])
+                new Flat("Loft", 40, 1, false, Furnish.NONE , house[3])
         };
-        //ввести массив квартир: введён
 
 
-        //перевести массив в LinkedList через for цикл.
+
+        //Initialize manager.
         Manager manager = new Manager();
-
+        //add new flats to manager
         for (Flat f: initialFlats)    {
             manager.flats.add(f);
         }
-
-                String userName; // переменная для имени пользователя
-
+        // save user name
+        String userName;
         System.out.print(
-                "Добро пожаловать в наше приложение Менеджер квартир!\n" +
-                        "Введите Ваше имя: \n");
-
-        userName = manager.scanner.nextLine(); // считываем введенное пользователем значение имени
+                "Welcome to our FLAT MANAGER!\n" +
+                        "Please enter your name: \n");
+        // read user name
+        userName = manager.scanner.nextLine();
         manager.addCommand(userName);
+        //provide user with help
+        System.out.print(userName + ", " + "following commands are available to your: \n");
+        manager.help(); // showing commands list immediately
 
-        System.out.print(userName + ", " + "для Вас доступны следующие команды: \n"); // выводим это сообщение пользователю
-        manager.help(); // сразу выдаётся информация о объектах
-
+        //variable to stop the loop
         boolean loopIsTrue = true;
 
-
         do {
-            System.out.println("Please type in what you need...");
+            //reading new command
+            System.out.println("\n \nPlease type in what you need...");
             String[] lineInParts = null;
             String argIn = null;
             String lineIn = manager.scanner.nextLine();
-            // history
 
             if (lineIn.contains(" ")) {
                  lineInParts = lineIn.split(" ");
@@ -67,7 +65,7 @@ public class Main {
                 lineIn = lineInParts[0];
                 argIn = lineInParts[1];
             }
-
+            //switch between possible commands
             switch (lineIn) {
                 case "exit":
                     System.out.println("Till the next time!");
@@ -96,12 +94,12 @@ public class Main {
 
                 case "update":
                     manager.addCommand(lineIn);
-                    manager.update_by_id();
+                    manager.update_by_id(argIn);
                     break;
 
                 case "remove":
                     manager.addCommand(lineIn);
-                    manager.remove_by_id();
+                    manager.remove_by_id(argIn);
                     break;
 
                 case "clear":
