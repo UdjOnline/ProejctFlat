@@ -70,7 +70,7 @@ public class Main {
 
             switch (lineIn) {
                 case "exit":
-                    System.out.println("до свиданья");
+                    System.out.println("Till the next time!");
                     loopIsTrue = false;
                     break;
 
@@ -96,7 +96,7 @@ public class Main {
 
                 case "update":
                     manager.addCommand(lineIn);
-                    manager.update_by_id(argIn);
+                    manager.update_by_id();
                     break;
 
                 case "remove":
@@ -130,7 +130,7 @@ public class Main {
                     break;
 
                 default:
-                    System.err.println("не верно задонноя строка");
+                    System.err.println("Unacceptable input!");
 
             }
         } while (loopIsTrue);

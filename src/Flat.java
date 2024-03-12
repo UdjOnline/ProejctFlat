@@ -98,6 +98,11 @@ public class Flat {
         return balcony;
     }
 
+    public void setBalcony(boolean balcony) {
+        this.balcony = balcony;
+    }
+
+    /*
     public void setBalcony(String balcon) {
         if (balcon.equals("yes") || balcon.equals("ja")) {
             this.balcony = true;
@@ -108,20 +113,22 @@ public class Flat {
         }
     }
 
+     */
+
     public Furnish getFurnish() {
         return furnish;
     }
 
-//    public void setFurnish(Furnish furnish) {
-//        this.furnish = furnish;
-//    }
+    public void setFurnish(Furnish furnish) {
+        this.furnish = furnish;
+    }
 
     public House getHouse() {
         return house;
     }
 
-//    public void setHouse(House house) {
-//        this.house = house;
-//    }
-//
+    public void setHouse(House house) {
+       this.house = house;
+    }
+
 }
