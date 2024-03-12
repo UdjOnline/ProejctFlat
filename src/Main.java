@@ -47,13 +47,13 @@ public class Main {
         manager.addCommand(userName);
 
         System.out.print(userName + ", " + "для Вас доступны следующие команды: \n"); // выводим это сообщение пользователю
-        manager.getHelp(); // сразу выдаётся информация о объектах
+        manager.help(); // сразу выдаётся информация о объектах
 
         boolean loopIsTrue = true;
 
 
         do {
-            manager.getIntro();
+            System.out.println("Please type in what you need...");
             String[] lineInParts = null;
             String argIn = null;
             String lineIn = manager.scanner.nextLine();
@@ -76,7 +76,7 @@ public class Main {
 
                 case "help":
                     manager.addCommand(lineIn);
-                    manager.getHelp();
+                    manager.help();
                     break;
 
                 case "info":
@@ -101,7 +101,7 @@ public class Main {
 
                 case "remove":
                     manager.addCommand(lineIn);
-                    manager.remove_by_id(argIn);
+                    manager.remove_by_id();
                     break;
 
                 case "clear":

@@ -26,7 +26,7 @@ public class Flat {
         this.house = house;
     }
 
-    //Конструктор квартиры
+    //Конструктор квартиры - без мебели
     public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
         this.id = 10115 * 100000 + Flat.count; //почтовый Индекс Берлина + счётсчик
         Flat.count++;
