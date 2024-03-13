@@ -21,7 +21,6 @@ public class Manager {
 
     //ADD COMMAND to the command list (commands)
     public void addCommand(String lastCommand) {
-        System.out.println("Adding current command to the list..");
         commands.add(lastCommand);
         if (commands.size() > 15) {
             commands.removeFirst();
