@@ -1,0 +1,15 @@
+1011500001,One-room,38,1,true,NONE,Hrushevka,1974
+1011500002,Two-room,45,2,false,NONE,Hrushevka,1974
+1011500003,Three-room,64,3,true,LITTLE,Hrushevka,1974
+1011500004,Studio,45,1,true,NONE,Hrushevka,1974
+1011500005,Penthouse,128,6,true,NONE,Monolithic,1900
+1011500006,Communal,22,1,false,NONE,Monolithic,1900
+1011500007,Loft,42,1,true,NONE,Monolithic,1900
+1011500008,Apartments,78,4,true,DESIGNER,Brick,2010
+1011500009,Two-room,47,2,true,NONE,Brick,2010
+1011500010,Penthouse,142,7,true,NONE,Brick,2010
+1011500011,Studio,43,1,false,NONE,Brick,2010
+1011500012,Communal,26,1,false,NONE,Townhouse,2008
+1011500013,One-room,37,1,false,NONE,Townhouse,2008
+1011500014,Four-room,75,4,true,NONE,Townhouse,2008
+1011500015,Loft,40,1,false,NONE,Townhouse,2008
