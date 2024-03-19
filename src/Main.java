@@ -1,40 +1,45 @@
 public class Main {
     public static void main(String[] args) {
 
-        //data for manager testing
-        House[] house = {
-                new House("Hrushevka", 1974),
-                new House("Monolithic", 1900),
-                new House("Brick", 2010),
-                new House("Townhouse",2008),
-        };
-
-        Flat[] initialFlats = new Flat[]{
-                new Flat("One-room", 38, 1, true, house[0]),
-                new Flat("Two-room", 45, 2, false, house[0]),
-                new Flat("Three-room", 64, 3, true, Furnish.LITTLE , house[0]),
-                new Flat("Studio", 45, 1, true, house[0]),
-                new Flat("Penthouse", 128, 6, true, house[1]),
-                new Flat("Communal", 22, 1, false, house[1]),
-                new Flat("Loft", 42, 1, true, house[1]),
-                new Flat("Apartments", 78, 4, true, Furnish.DESIGNER , house[2]),
-                new Flat("Two-room", 47, 2, true, house[2]),
-                new Flat("Penthouse", 142, 7, true, house[2]),
-                new Flat("Studio", 43, 1, false, house[2]),
-                new Flat("Communal", 26, 1, false, house[3]),
-                new Flat("One-room", 37, 1, false, house[3]),
-                new Flat("Four-room", 75, 4, true, house[3]),
-                new Flat("Loft", 40, 1, false, Furnish.NONE , house[3])
-        };
-
-
-
         //Initialize manager.
         Manager manager = new Manager();
-        //add new flats to manager
-        for (Flat f: initialFlats)    {
-            manager.flats.add(f);
-        }
+//
+//
+//        //data for manager testing
+//        House[] house = {
+//                new House("Hrushevka", 1974),
+//                new House("Monolithic", 1900),
+//                new House("Brick", 2010),
+//                new House("Townhouse",2008),
+//        };
+//
+//        Flat[] initialFlats = new Flat[]{
+//                new Flat("One-room", 38, 1, true, Furnish.NONE, house[0]),
+//                new Flat("Two-room", 45, 2, false, Furnish.NONE, house[0]),
+//                new Flat("Three-room", 64, 3, true, Furnish.LITTLE , house[0]),
+//                new Flat("Studio", 45, 1, true, Furnish.NONE, house[0]),
+//                new Flat("Penthouse", 128, 6, true, Furnish.NONE, house[1]),
+//                new Flat("Communal", 22, 1, false, Furnish.NONE, house[1]),
+//                new Flat("Loft", 42, 1, true, Furnish.NONE, house[1]),
+//                new Flat("Apartments", 78, 4, true, Furnish.DESIGNER , house[2]),
+//                new Flat("Two-room", 47, 2, true, Furnish.NONE, house[2]),
+//                new Flat("Penthouse", 142, 7, true, Furnish.NONE, house[2]),
+//                new Flat("Studio", 43, 1, false, Furnish.NONE, house[2]),
+//                new Flat("Communal", 26, 1, false, Furnish.NONE, house[3]),
+//                new Flat("One-room", 37, 1, false, Furnish.NONE, house[3]),
+//                new Flat("Four-room", 75, 4, true, Furnish.NONE, house[3]),
+//                new Flat("Loft", 40, 1, false, Furnish.NONE , house[3])
+//        };
+//
+//
+//        //add new flats to manager
+//        for (Flat f: initialFlats)    {
+//            manager.flats.add(f);
+//        }
+
+        //create a list of Flats from a file:
+        manager.readData();
+
         // save user name
         String userName;
         System.out.print(
@@ -68,7 +73,7 @@ public class Main {
             //switch between possible commands
             switch (lineIn) {
                 case "exit":
-                    System.out.println("Till the next time!");
+                    System.out.println("See you next time! Good Bye");
                     loopIsTrue = false;
                     break;
 
@@ -125,6 +130,16 @@ public class Main {
                 case "print_ascending":
                     manager.addCommand(lineIn);
                     manager.print_ascending();
+                    break;
+
+                case "write":
+                    manager.addCommand(lineIn);
+                    manager.writeData();
+                    break;
+
+                case "read":
+                    manager.addCommand(lineIn);
+                    manager.writeData();
                     break;
 
                 default:

@@ -1,7 +1,10 @@
+import java.io.*;
 import java.util.*;
 
 
 public class Manager {
+
+    final String fileName = new String("src/flats.cvs");
 
     List<Flat> flats;
     LinkedList<String> commands;
@@ -235,7 +238,8 @@ public class Manager {
     //SHOW HELP with the list of all commands
     public void help() {
         // Roman
-        System.out.println("help: the list of all commands \n" +
+        System.out.println(
+                "help: the list of all commands \n" +
                 "info: provide information about this manager \n" +
                 "show: show all flats in the list: \n" +
                 "add: add new flat to the list \n" +
@@ -246,7 +250,10 @@ public class Manager {
                 "remove_head: remove first flat fromt he list and show it \n" +
                 "history: show the last 15 commands \n" +
                 "filter_balcony: show all flats with/without balcony \n" +
-                "print_ascending: show the list of flats in ascending order");
+                "print_ascending: show the list of flats in ascending order\n" +
+                "write: write the Data of the Flats into a file.\n" +
+                "read: get the list of flats from file"
+        );
     }
 
     //SHOW COMMAND HISTORY - last 15 commands or less
@@ -268,9 +275,9 @@ public class Manager {
     public void remove_by_id(String args) {
         //read ID, find if it here is a flat with such id, return index
         int index = findListIndexByFlatID(args);
-        if (index!=-1) {
+        if (index != -1) {
             flats.remove(index);
-            System.out.println("Flat with ID "+args+" removed from the list!");
+            System.out.println("Flat with ID " + args + " removed from the list!");
         } else {
             System.err.println("No apartment with such ID found!");
         }
@@ -308,11 +315,11 @@ public class Manager {
     //startInfoCommand
     public void startInfoCommand() {
         //Roman
-        System.out.println("This FLAT MANAGER was initialized on "+this.date+".");
-        System.out.println("At the moment, the FLAT MANAGER has "+flats.size()+" of flats saved.");
-        if (flats.size()<10)
+        System.out.println("This FLAT MANAGER was initialized on " + this.date + ".");
+        System.out.println("At the moment, the FLAT MANAGER has " + flats.size() + " of flats saved.");
+        if (flats.size() < 10)
             System.out.println("Hardly impressive - but there is room for improvement");
-        if (flats.size()>=10)
+        if (flats.size() >= 10)
             System.out.println("That's a lot of flats!");
         System.out.println("FLAT MANAGER is the result of collective effort by Team 1, Cohort 40_2 of AIT TR course.");
         System.out.println("- Sergej Schmidt");
@@ -329,7 +336,7 @@ public class Manager {
         //read ID, find if ithere is a flat with such id, return index
         int index = findListIndexByFlatID(args);
         //if no such flat - get out
-        if (index==-1) {
+        if (index == -1) {
             System.err.println("There is no flat with such ID!");
             return;
         }
@@ -389,10 +396,6 @@ public class Manager {
 
     }
 
-
-
-
-
     public void print_ascending() {
         boolean looper = true;
         do {
@@ -408,21 +411,21 @@ public class Manager {
                 case "name":
                     System.out.println("Flats sorted by name:");
                     FlatNameComparator compName = new FlatNameComparator();
-                    Collections.sort(flats,compName);
+                    Collections.sort(flats, compName);
                     show();
                     looper = false;
                     break;
                 case "area":
                     System.out.println("Flats sorted by area:");
                     FlatAreaComparator compArea = new FlatAreaComparator();
-                    Collections.sort(flats,compArea);
+                    Collections.sort(flats, compArea);
                     show();
                     looper = false;
                     break;
                 case "rooms":
                     System.out.println("Flats sorted by number of rooms:");
                     FlatRoomNumberComparator compRoom = new FlatRoomNumberComparator();
-                    Collections.sort(flats,compRoom);
+                    Collections.sort(flats, compRoom);
                     show();
                     looper = false;
                     break;
@@ -432,6 +435,79 @@ public class Manager {
         } while (looper);
     }
 
+    //write the Data of the flat Array into a cvs file
+    public void writeData() {
+        try (FileWriter fw = new FileWriter(fileName)) {
+            BufferedWriter bw = new BufferedWriter(fw);
+            for (Flat flat : flats) {       //iteration through the list
+                bw.write(flat.getId() + ","
+                        + flat.getName() + ","
+                        + flat.getArea() + ","
+                        + flat.getNumberOfRooms() + ","
+                        + flat.isBalcony() + ","
+                        + flat.getFurnish() + ","
+                        + flat.getHouse().getName() + ","
+                        + flat.getHouse().getYear()); // all elements are separated by comma
+                bw.newLine(); // new line
+            }
+            bw.flush();         //writing the rows from the buffer into a file
+            System.out.println("Data of the Flat's List has been written to: " + fileName);
+        } catch (IOException e) {
+            System.err.print("An error has been appeared");
+        }
+    }
+
+    public void readData() {
+        String[] inputData = null;
+        int i = 0;
+
+        try (FileReader fr = new FileReader(fileName)) {
+            BufferedReader br = new BufferedReader(fr);
+
+            do {
+                // reading by line
+                String line = br.readLine();
+                if (line == null) // finish, if reached the end of the file
+                    break;
+                // split the line into a data parts
+                inputData = line.split(",");
+
+                long id = Long.parseLong(inputData[0]);
+                String name = inputData[1];
+                int area = Integer.parseInt(inputData[2]);
+                int numberOfRooms = Integer.parseInt(inputData[3]);
+                boolean balcony = Boolean.parseBoolean(inputData[4]);
+                //check Furnishing:
+                Furnish furnish;
+                switch (inputData[5]) {
+                    case "DESIGNER":
+                        furnish = Furnish.DESIGNER;
+                        break;
+                    case "LITTLE":
+                        furnish = Furnish.LITTLE;
+                        break;
+                    case "BAD":
+                        furnish = Furnish.BAD;
+                        break;
+                    default:
+                        furnish = Furnish.NONE;
+
+                }
+
+                String houseName = inputData[6];
+                int houseYear = Integer.parseInt(inputData[7]);
+                House house = new House(houseName, houseYear);
+
+                Flat newFlat = new Flat(id, name, area, numberOfRooms, balcony, furnish, house);
+
+                flats.add(newFlat);
+            } while (true);
+            System.out.println("List of flats were reading succesfully");
+        } catch (IOException e) {
+            System.out.print("Ошибка ввода вывода");
+        }
+
+    }
 
     /*
     // these functions are not needed in current version of the manager
@@ -456,3 +532,4 @@ public class Manager {
 
 
 }
+

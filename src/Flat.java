@@ -27,16 +27,29 @@ public class Flat {
         this.house = house;
     }
 
-    //FLAT CONSTRUCTOR - without furniture
-    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
-        this.id = 10115 * 100000 + Flat.count; //Berlin postal index + counter
-        Flat.count++;
+//    //FLAT CONSTRUCTOR - without furniture
+//    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
+//        this.id = 10115 * 100000 + Flat.count; //Berlin postal index + counter
+//        Flat.count++;
+//
+//        this.name = name;
+//        this.area = area;
+//        this.numberOfRooms = numberOfRooms;
+//        this.balcony = balcony;
+//        this.furnish = null;
+//        this.house = house;
+//    }
 
+
+    //FLAT CONSTRUCTOR - for reading from a file
+    public Flat(long id, String name, Integer area, Integer numberOfRooms, boolean balcony, Furnish furnish, House house) {
+
+        this.id = id;
         this.name = name;
         this.area = area;
         this.numberOfRooms = numberOfRooms;
         this.balcony = balcony;
-        this.furnish = null;
+        this.furnish = furnish;
         this.house = house;
     }
 
