@@ -37,6 +37,7 @@ public class Main {
 //            manager.flats.add(f);
 //        }
 
+
         //create a list of Flats from a file:
         manager.readData();
 
@@ -99,12 +100,12 @@ public class Main {
 
                 case "update":
                     manager.addCommand(lineIn);
-                    manager.update_by_id(argIn);
+                    manager.updateById(argIn);
                     break;
 
                 case "remove":
                     manager.addCommand(lineIn);
-                    manager.remove_by_id(argIn);
+                    manager.removeById(argIn);
                     break;
 
                 case "clear":
@@ -114,7 +115,7 @@ public class Main {
 
                 case "remove_head":
                     manager.addCommand(lineIn);
-                    manager.remove_head();
+                    manager.removeHead();
                     break;
 
                 case "history":
@@ -124,12 +125,12 @@ public class Main {
 
                 case "filter_balcony":
                     manager.addCommand(lineIn);
-                    manager.filter_balcony();
+                    manager.filterBalcony();
                     break;
 
                 case "print_ascending":
                     manager.addCommand(lineIn);
-                    manager.print_ascending();
+                    manager.printAscending();
                     break;
 
                 case "write":

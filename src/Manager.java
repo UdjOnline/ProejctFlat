@@ -33,12 +33,12 @@ public class Manager {
     //ADD FLAT
     public void addFlat() {
         System.out.println("Add a new flat!");
-        String addName = addFlatName();
-        int addArea = addFlatArea();
-        int addNrRooms = addFlatNrRooms();
-        boolean addBalcony = addFlatBalcony();
-        Furnish furniture = addFlatFurniture();
-        House h1 = addFlatHouse();
+        String addName = getFlatName();
+        int addArea = getFlatArea();
+        int addNrRooms = getFlatNrRooms();
+        boolean addBalcony = getFlatBalcony();
+        Furnish furniture = getFlatFurniture();
+        House h1 = getHouse();
         //add new FLat
         Flat flat = new Flat(addName, addArea, addNrRooms, addBalcony, furniture, h1);
         flats.add(flat);
@@ -47,14 +47,13 @@ public class Manager {
     }
 
     //auxiliary method to allow user to enter flat's name
-    private String addFlatName() {
+    private String getFlatName() {
         String flatName;
         do {
             System.out.println("Enter flat's name...");
             flatName = scanner.nextLine();
             if (flatName.equals("")) {
                 System.err.println("Name can't be empty.");
-                continue;
             } else {
                 return flatName;
             }
@@ -62,7 +61,7 @@ public class Manager {
     }
 
     //auxiliary method to allow user to enter flat's area
-    private int addFlatArea() {
+    private int getFlatArea() {
         String lineIn;
         int addArea = -1;
         do {
@@ -74,15 +73,16 @@ public class Manager {
                     addArea = -1;
                     System.err.println("Unacceptable area, must be between 0 and 200 square meters.");
                 }
+                break;
             } else {
                 System.err.println("Unacceptable entry, a number is required.");
             }
-        } while (!Utils.isInt(lineIn) || addArea < 0);
+        } while (true);
         return addArea;
     }
 
     //auxiliary method to allow user to enter the number of flat's rooms
-    private int addFlatNrRooms() {
+    private int getFlatNrRooms() {
         String lineIn;
         int addNrRooms = -1;
         do {
@@ -96,15 +96,16 @@ public class Manager {
                     //continue here;
                     //break to the cycle's beginning doesn't work
                 }
+                break;
             } else {
                 System.err.println("Unacceptable entry, provide number of rooms between 0 and 8.");
             }
-        } while (!Utils.isInt(lineIn) || addNrRooms < 0);
+        } while (true);
         return addNrRooms;
     }
 
     //auxiliary method to allow user to enter whether the flat has a balcony
-    private boolean addFlatBalcony() {
+    private boolean getFlatBalcony() {
         String lineIn;
         boolean addBalcony = false;
         do {
@@ -125,7 +126,7 @@ public class Manager {
     }
 
     //auxiliary method to allow user to grade the flat's furniture
-    private Furnish addFlatFurniture() {
+    private Furnish getFlatFurniture() {
         String lineIn;
         Furnish furniture = null;
         do {
@@ -162,13 +163,13 @@ public class Manager {
     }
 
     //auxiliary method to add a new House to a building
-    private House addFlatHouse() {
-        House house = new House(addHouseName(), addHouseYear());
+    private House getHouse() {
+        House house = new House(getHouseName(), getHouseYear());
         return house;
     }
 
     //auxiliary method to allow user to provide house's building year
-    private int addHouseYear() {
+    private int getHouseYear() {
         while (true) {
             System.out.println("Enter the house's building year:");
             String line = scanner.nextLine();
@@ -185,7 +186,7 @@ public class Manager {
     }
 
     //auxiliary method to allow user to provide house's name
-    private String addHouseName() {
+    private String getHouseName() {
         while (true) {
             System.out.println("Please enter the house's name: ");
             String line = scanner.nextLine();
@@ -212,7 +213,7 @@ public class Manager {
     }
 
     //SHOW THE LIST OF FLATS FILTERED BY BALCONY!
-    public void filter_balcony() {
+    public void filterBalcony() {
         System.out.println("Show all flats with or without balconies! \n " +
                 "with / mit = with a balcony, without / ohne = without one.");
         String lineIn = scanner.nextLine().toLowerCase();
@@ -265,14 +266,14 @@ public class Manager {
     }
 
     //REMOVE THE FIRST ELEMENT AND SHOW IT
-    public void remove_head() {
+    public void removeHead() {
         System.out.println("Removing the first flat in the list!");
         System.out.println("This is what it was:");
         System.out.println(flats.remove(0));
     }
 
     //REMOVE A FLAT BY ID
-    public void remove_by_id(String args) {
+    public void removeById(String args) {
         //read ID, find if it here is a flat with such id, return index
         int index = findListIndexByFlatID(args);
         if (index != -1) {
@@ -332,7 +333,7 @@ public class Manager {
 
 
     //UPDATE FLAT BY ID
-    public void update_by_id(String args) {
+    public void updateById(String args) {
         //read ID, find if ithere is a flat with such id, return index
         int index = findListIndexByFlatID(args);
         //if no such flat - get out
@@ -357,32 +358,32 @@ public class Manager {
             // to the flat with index [index]
             switch (lineIn) {
                 case "name":
-                    flats.get(index).setName(addFlatName());
+                    flats.get(index).setName(getFlatName());
                     System.out.println("Updated Flat:");
                     System.out.println(flats.get(index));
                     break;
                 case "area":
-                    flats.get(index).setArea(addFlatArea());
+                    flats.get(index).setArea(getFlatArea());
                     System.out.println("Updated Flat:");
                     System.out.println(flats.get(index));
                     break;
                 case "rooms":
-                    flats.get(index).setNumberOfRooms(addFlatNrRooms());
+                    flats.get(index).setNumberOfRooms(getFlatNrRooms());
                     System.out.println("Updated Flat:");
                     System.out.println(flats.get(index));
                     break;
                 case "balcony":
-                    flats.get(index).setBalcony(addFlatBalcony());
+                    flats.get(index).setBalcony(getFlatBalcony());
                     System.out.println("Updated Flat:");
                     System.out.println(flats.get(index));
                     break;
                 case "furnish":
-                    flats.get(index).setFurnish(addFlatFurniture());
+                    flats.get(index).setFurnish(getFlatFurniture());
                     System.out.println("Updated Flat:");
                     System.out.println(flats.get(index));
                     break;
                 case "house":
-                    flats.get(index).setHouse(addFlatHouse());
+                    flats.get(index).setHouse(getHouse());
                     System.out.println("Updated Flat:");
                     System.out.println(flats.get(index));
                     break;
@@ -396,7 +397,7 @@ public class Manager {
 
     }
 
-    public void print_ascending() {
+    public void printAscending() {
         boolean looper = true;
         do {
             // ask for parameter to change
