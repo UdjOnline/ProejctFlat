@@ -1,6 +1,6 @@
 import java.util.Comparator;
 
-public class Flat {
+public class Flat implements Comparable<Flat> {
 
     private static int count = 1;
 
@@ -27,18 +27,18 @@ public class Flat {
         this.house = house;
     }
 
-//    //FLAT CONSTRUCTOR - without furniture
-//    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
-//        this.id = 10115 * 100000 + Flat.count; //Berlin postal index + counter
-//        Flat.count++;
-//
-//        this.name = name;
-//        this.area = area;
-//        this.numberOfRooms = numberOfRooms;
-//        this.balcony = balcony;
-//        this.furnish = null;
-//        this.house = house;
-//    }
+    //FLAT CONSTRUCTOR - without furniture
+    public Flat(String name, Integer area, Integer numberOfRooms, boolean balcony, House house) {
+        this.id = 10115 * 100000 + Flat.count; //Berlin postal index + counter
+        Flat.count++;
+
+        this.name = name;
+        this.area = area;
+        this.numberOfRooms = numberOfRooms;
+        this.balcony = balcony;
+        this.furnish = null;
+        this.house = house;
+    }
 
 
     //FLAT CONSTRUCTOR - for reading from a file
@@ -51,6 +51,12 @@ public class Flat {
         this.balcony = balcony;
         this.furnish = furnish;
         this.house = house;
+    }
+
+    //Comparable by size
+    @Override
+    public int compareTo(Flat flat) {
+        return this.area-flat.getArea();
     }
 
     @Override

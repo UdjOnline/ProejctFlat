@@ -1,4 +1,4 @@
-public class House {
+public class House implements Comparable<House> {
     private String name; //can't be null
     private int year; //between 0 and 2030
 
@@ -28,5 +28,10 @@ public class House {
     @Override
     public String toString() {
         return " The house is named " + this.name + " and it was built in  " + this.year+"." ;
+    }
+
+    @Override
+    public int compareTo(House h1) {
+        return this.year-h1.getYear();
     }
 }
